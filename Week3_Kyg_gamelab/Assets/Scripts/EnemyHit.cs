@@ -13,6 +13,7 @@ public class EnemyHit : MonoBehaviour
     }
     public EnemyCollisionType damageType;
     public EnemyController controller;
+    public GameObject fakeBody;
 
 
     public void HIT(float value)
@@ -30,9 +31,13 @@ public class EnemyHit : MonoBehaviour
     }
     public void Down()
     {
+
         transform.SetParent(null);
         gameObject.AddComponent<Rigidbody>();
-        gameObject.layer = LayerMask.NameToLayer("Debris");
+        //gameObject.layer = LayerMask.NameToLayer("Debris"); 원래는 데미지 적용 안시킬려고 만든건데 이제 필요없음
+
+        gameObject.SetActive(false);
+        fakeBody.SetActive(true);
 
     }
 }

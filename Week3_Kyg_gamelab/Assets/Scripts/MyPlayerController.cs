@@ -5,6 +5,7 @@ public class MyPlayerController : MonoBehaviour
     private MyPlayerInput _input;
     private CharacterController _controller;
     private GameObject _mainCamera;
+    public EnemyController enemy_controller;
     private EnemyHit EnemyH;
     [Header("Player")]
     private float _speed;
@@ -175,15 +176,16 @@ public class MyPlayerController : MonoBehaviour
     {
         try
         {
-            EnemyH = hit.transform.GetComponent<EnemyHit>();
+            EnemyH = hit.collider.GetComponent<EnemyHit>();
             switch (EnemyH.damageType)
             {
                 case EnemyHit.EnemyCollisionType.head:
                     EnemyH.HIT(damage * 5);
-
+                    Debug.Log("머리");
                     break;
                 case EnemyHit.EnemyCollisionType.body:
                     EnemyH.HIT(damage * 2.5f);
+                    Debug.Log("몸통");
                     break;
                 case EnemyHit.EnemyCollisionType.leftArm:
                     EnemyH.HIT(damage * 2);
@@ -195,17 +197,21 @@ public class MyPlayerController : MonoBehaviour
                     break;
                 case EnemyHit.EnemyCollisionType.leftLeg:
                     EnemyH.HIT(damage * 2);
+
+
                     EnemyH.Down();
+                    enemy_controller.LegCut();
                     break;
                 case EnemyHit.EnemyCollisionType.rightLeg:
                     EnemyH.HIT(damage * 2);
                     EnemyH.Down();
+                    enemy_controller.LegCut();
                     break;
             }
         }
-        catch
+        catch (System.Exception e)
         {
-
+            Debug.LogError("피격 처리 중 에러 발생: " + e.Message);
         }
     }
     private void Zoom(bool isZooming)
