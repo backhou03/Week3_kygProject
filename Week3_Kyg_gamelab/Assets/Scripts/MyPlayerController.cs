@@ -58,7 +58,8 @@ public class MyPlayerController : MonoBehaviour
     private void OnDisable()
     {
         _input.IsShot -= Shot;
-        _input.IsZoom += Zoom;
+        _input.IsZoom -= Zoom;
+
     }
     // Update is called once per frame
     void Update()

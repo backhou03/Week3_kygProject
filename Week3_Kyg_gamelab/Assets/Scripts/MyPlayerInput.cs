@@ -12,11 +12,11 @@ public class MyPlayerInput : MonoBehaviour
     //public bool IsShot;
     public event Action<bool> IsZoom;
     public event Action IsShot;
-    public MyPlayerController _cont;
+
     private void Awake()
     {
         actions = new InputSystem_Actions();
-        _cont = GetComponent<MyPlayerController>();
+
     }
 
     private void OnEnable()
@@ -95,7 +95,9 @@ public class MyPlayerInput : MonoBehaviour
     private void OnSprint(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-        { sprint = true; }
+        {
+            sprint = true;
+        }
         else if (context.phase == InputActionPhase.Canceled)
         {
             sprint = false;
