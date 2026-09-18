@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1859e08f082f34845a2240c947cd2140, type: 2}
+  - {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,6 +128,8 @@ MonoBehaviour:
   damageType: 2
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 0}
+  _red: {fileID: 0}
+  renderer: {fileID: 0}
 --- !u!54 &5990565844254321813
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -293,6 +295,8 @@ MonoBehaviour:
   damageType: 5
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 5897875632223612574}
+  _red: {fileID: 0}
+  renderer: {fileID: 0}
 --- !u!1 &2958693289939424288
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +365,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1859e08f082f34845a2240c947cd2140, type: 2}
+  - {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -421,6 +425,8 @@ MonoBehaviour:
   damageType: 3
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 0}
+  _red: {fileID: 0}
+  renderer: {fileID: 0}
 --- !u!54 &5624165707004842891
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -470,6 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8396672367993407580}
   - component: {fileID: 162688906165784087}
+  - component: {fileID: 4088456406352997490}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -517,6 +524,33 @@ MonoBehaviour:
   health: 100
   left_leg: {fileID: 4984947259266720362}
   right_leg: {fileID: 1178639969566424528}
+--- !u!54 &4088456406352997490
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3470551675339220360}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4115813977362823906
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +677,8 @@ MonoBehaviour:
   damageType: 2
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 479019176735628095}
+  _red: {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
+  renderer: {fileID: 0}
 --- !u!1 &4984947259266720362
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +805,8 @@ MonoBehaviour:
   damageType: 4
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 5036640227197622411}
+  _red: {fileID: 0}
+  renderer: {fileID: 0}
 --- !u!1 &5036640227197622411
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +875,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1859e08f082f34845a2240c947cd2140, type: 2}
+  - {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -897,6 +935,8 @@ MonoBehaviour:
   damageType: 4
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 0}
+  _red: {fileID: 0}
+  renderer: {fileID: 0}
 --- !u!54 &2175558141694443322
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1004,7 +1044,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1859e08f082f34845a2240c947cd2140, type: 2}
+  - {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1064,6 +1104,8 @@ MonoBehaviour:
   damageType: 5
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 0}
+  _red: {fileID: 0}
+  renderer: {fileID: 0}
 --- !u!54 &8840315379929493422
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1227,6 +1269,8 @@ MonoBehaviour:
   damageType: 0
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 0}
+  _red: {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
+  renderer: {fileID: 0}
 --- !u!1 &7685430245086400591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,6 +1397,8 @@ MonoBehaviour:
   damageType: 3
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 2958693289939424288}
+  _red: {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
+  renderer: {fileID: 0}
 --- !u!1 &9215796731049014980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,3 +1525,5 @@ MonoBehaviour:
   damageType: 1
   controller: {fileID: 162688906165784087}
   fakeBody: {fileID: 0}
+  _red: {fileID: 2100000, guid: 80d861bbbdac75140820075cb7e01636, type: 2}
+  renderer: {fileID: 0}

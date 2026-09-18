@@ -204,12 +204,12 @@ public class MyPlayerController : MonoBehaviour
 
 
                     EnemyH.Down();
-                    enemy_controller.LegCut();
+                    EnemyH.controller.LegCut();
                     break;
                 case EnemyHit.EnemyCollisionType.rightLeg:
                     EnemyH.HIT(damage * 2);
                     EnemyH.Down();
-                    enemy_controller.LegCut();
+                    EnemyH.controller.LegCut();
                     break;
             }
         }
