@@ -10,6 +10,7 @@ public class MyPlayerController : MonoBehaviour
     private float sprintSpeed = 5.335f;
     public float moveSpeed = 2f;
 
+
     public float SpeedChangeRate = 10f; //가속 감속을 위한 수치
     [Space]
     [Header("Cinemachine")]
@@ -28,6 +29,7 @@ public class MyPlayerController : MonoBehaviour
     private bool IsCurrentDeviceMouse = true;
     private float _threshold = 0.1f;
     private float _rotationVelocity;
+    [SerializeField] private GameObject crosshair;
 
     private void Awake()
     {
@@ -35,21 +37,32 @@ public class MyPlayerController : MonoBehaviour
         {
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera"); //카메라가 비어있으면 카메라 할당
         }
+        _input = GetComponent<MyPlayerInput>();
+        _controller = GetComponent<CharacterController>();
     }
     void Start()
     {
         //시작할때 마우스가 이상한곳으로 튀지 않도록 값을 삽입
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
-        _input = GetComponent<MyPlayerInput>();
-        _controller = GetComponent<CharacterController>();
+
 
     }
-
+    private void OnEnable()
+    {
+        _input.IsShot += Shot;
+        _input.IsZoom += Zoom;
+    }
+    private void OnDisable()
+    {
+        _input.IsShot -= Shot;
+        _input.IsZoom += Zoom;
+    }
     // Update is called once per frame
     void Update()
     {
         Move();
+
     }
     private void LateUpdate()
     {
@@ -139,5 +152,27 @@ public class MyPlayerController : MonoBehaviour
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
+    private void Shot()
+    {
 
+        if (crosshair.activeSelf)
+        {
+
+            RaycastHit hit;
+            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f))
+            {
+                Debug.Log(hit.transform.position);
+                Debug.Log(hit.transform.name);
+            }
+
+            Debug.DrawRay(_mainCamera.transform.position, _mainCamera.transform.forward * 15, Color.red);
+        }
+
+    }
+    private void Zoom(bool isZooming)
+    {
+
+        crosshair.SetActive(isZooming);
+
+    }
 }

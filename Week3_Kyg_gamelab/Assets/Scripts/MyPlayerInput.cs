@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class MyPlayerInput : MonoBehaviour
@@ -8,10 +9,14 @@ public class MyPlayerInput : MonoBehaviour
     public Vector2 move;
     public Vector2 look;
     public bool sprint;
-
+    //public bool IsShot;
+    public event Action<bool> IsZoom;
+    public event Action IsShot;
+    public MyPlayerController _cont;
     private void Awake()
     {
         actions = new InputSystem_Actions();
+        _cont = GetComponent<MyPlayerController>();
     }
 
     private void OnEnable()
@@ -28,6 +33,12 @@ public class MyPlayerInput : MonoBehaviour
         actions.Player.Sprint.performed += OnSprint;
         actions.Player.Sprint.canceled += OnSprint;
 
+        actions.Player.Attack.performed += OnAttack;
+
+
+        actions.Player.Zoom.performed += OnZoom;
+        actions.Player.Zoom.canceled += OnZoom;
+
         actions.Player.Look.started += OnLook;
         actions.Player.Look.performed += OnLook;
         actions.Player.Look.canceled += OnLook;
@@ -43,6 +54,11 @@ public class MyPlayerInput : MonoBehaviour
 
         actions.Player.Sprint.performed -= OnSprint;
         actions.Player.Sprint.canceled -= OnSprint;
+
+        actions.Player.Attack.performed -= OnAttack;
+
+        actions.Player.Zoom.performed -= OnZoom;
+        actions.Player.Zoom.canceled -= OnZoom;
 
         actions.Player.Look.started -= OnLook;
         actions.Player.Look.performed -= OnLook;
@@ -64,6 +80,17 @@ public class MyPlayerInput : MonoBehaviour
             move = Vector2.zero;
         }
 
+    }
+    private void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            IsShot?.Invoke();
+        }
+    }
+    private void OnZoom(InputAction.CallbackContext context)
+    {
+        IsZoom?.Invoke(context.ReadValueAsButton());
     }
     private void OnSprint(InputAction.CallbackContext context)
     {
