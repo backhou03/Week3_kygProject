@@ -7,6 +7,7 @@ public class MyPlayerInput : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector2 move;
     public Vector2 look;
+    public bool sprint;
 
     private void Awake()
     {
@@ -23,6 +24,10 @@ public class MyPlayerInput : MonoBehaviour
         actions.Player.Move.performed += OnMove;
         actions.Player.Move.canceled += OnMove;
 
+
+        actions.Player.Sprint.performed += OnSprint;
+        actions.Player.Sprint.canceled += OnSprint;
+
         actions.Player.Look.started += OnLook;
         actions.Player.Look.performed += OnLook;
         actions.Player.Look.canceled += OnLook;
@@ -35,6 +40,9 @@ public class MyPlayerInput : MonoBehaviour
         actions.Player.Move.started -= OnMove;
         actions.Player.Move.performed -= OnMove;
         actions.Player.Move.canceled -= OnMove;
+
+        actions.Player.Sprint.performed -= OnSprint;
+        actions.Player.Sprint.canceled -= OnSprint;
 
         actions.Player.Look.started -= OnLook;
         actions.Player.Look.performed -= OnLook;
@@ -55,6 +63,17 @@ public class MyPlayerInput : MonoBehaviour
         {
             move = Vector2.zero;
         }
+
+    }
+    private void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        { sprint = true; }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            sprint = false;
+        }
+
 
     }
     private void OnLook(InputAction.CallbackContext context)
