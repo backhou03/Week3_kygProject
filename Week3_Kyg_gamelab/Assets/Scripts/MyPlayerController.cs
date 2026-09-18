@@ -182,14 +182,18 @@ public class MyPlayerController : MonoBehaviour
                 case EnemyHit.EnemyCollisionType.head:
                     EnemyH.HIT(damage * 5);
                     Debug.Log("머리");
+                    EnemyH.HitColor();
                     break;
                 case EnemyHit.EnemyCollisionType.body:
                     EnemyH.HIT(damage * 2.5f);
                     Debug.Log("몸통");
+                    EnemyH.HitColor();
                     break;
                 case EnemyHit.EnemyCollisionType.leftArm:
                     EnemyH.HIT(damage * 2);
+
                     EnemyH.Down();
+
                     break;
                 case EnemyHit.EnemyCollisionType.rightArm:
                     EnemyH.HIT(damage * 2);

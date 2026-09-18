@@ -14,8 +14,13 @@ public class EnemyHit : MonoBehaviour
     public EnemyCollisionType damageType;
     public EnemyController controller;
     public GameObject fakeBody;
+    public Material _red;
+    public Renderer renderer;
 
-
+    public void Start()
+    {
+        renderer = gameObject.GetComponent<Renderer>();
+    }
     public void HIT(float value)
     {
         try
@@ -39,5 +44,9 @@ public class EnemyHit : MonoBehaviour
         gameObject.SetActive(false);
         fakeBody.SetActive(true);
 
+    }
+    public void HitColor()
+    {
+        renderer.material = _red;
     }
 }
