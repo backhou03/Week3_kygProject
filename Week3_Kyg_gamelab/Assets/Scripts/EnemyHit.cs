@@ -2,15 +2,37 @@ using UnityEngine;
 
 public class EnemyHit : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public enum EnemyCollisionType
     {
-        
+        head,
+        body,
+        leftArm,
+        rightArm,
+        leftLeg,
+        rightLeg
     }
+    public EnemyCollisionType damageType;
+    public EnemyController controller;
 
-    // Update is called once per frame
-    void Update()
+
+    public void HIT(float value)
     {
-        
+        try
+        {
+            controller.health -= value;
+            if (controller.health <= 0)
+                controller.die();
+        }
+        catch
+        {
+            Debug.Log("controller is not connected");
+        }
+    }
+    public void Down()
+    {
+        transform.SetParent(null);
+        gameObject.AddComponent<Rigidbody>();
+        gameObject.layer = LayerMask.NameToLayer("Debris");
+
     }
 }

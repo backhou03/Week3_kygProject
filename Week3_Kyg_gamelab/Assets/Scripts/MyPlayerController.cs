@@ -5,11 +5,12 @@ public class MyPlayerController : MonoBehaviour
     private MyPlayerInput _input;
     private CharacterController _controller;
     private GameObject _mainCamera;
+    private EnemyHit EnemyH;
     [Header("Player")]
     private float _speed;
     private float sprintSpeed = 5.335f;
     public float moveSpeed = 2f;
-
+    public float damage = 10.0f;
 
     public float SpeedChangeRate = 10f; //가속 감속을 위한 수치
     [Space]
@@ -159,15 +160,53 @@ public class MyPlayerController : MonoBehaviour
         {
 
             RaycastHit hit;
-            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f))
+            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f, LayerMask.GetMask("Enemy")))
             {
-                Debug.Log(hit.transform.position);
-                Debug.Log(hit.transform.name);
+                /*                Debug.Log(hit.transform.position);
+                                Debug.Log(hit.transform.name);*/
+                CheckHit(hit);
             }
 
             Debug.DrawRay(_mainCamera.transform.position, _mainCamera.transform.forward * 15, Color.red);
         }
 
+    }
+    private void CheckHit(RaycastHit hit)
+    {
+        try
+        {
+            EnemyH = hit.transform.GetComponent<EnemyHit>();
+            switch (EnemyH.damageType)
+            {
+                case EnemyHit.EnemyCollisionType.head:
+                    EnemyH.HIT(damage * 5);
+
+                    break;
+                case EnemyHit.EnemyCollisionType.body:
+                    EnemyH.HIT(damage * 2.5f);
+                    break;
+                case EnemyHit.EnemyCollisionType.leftArm:
+                    EnemyH.HIT(damage * 2);
+                    EnemyH.Down();
+                    break;
+                case EnemyHit.EnemyCollisionType.rightArm:
+                    EnemyH.HIT(damage * 2);
+                    EnemyH.Down();
+                    break;
+                case EnemyHit.EnemyCollisionType.leftLeg:
+                    EnemyH.HIT(damage * 2);
+                    EnemyH.Down();
+                    break;
+                case EnemyHit.EnemyCollisionType.rightLeg:
+                    EnemyH.HIT(damage * 2);
+                    EnemyH.Down();
+                    break;
+            }
+        }
+        catch
+        {
+
+        }
     }
     private void Zoom(bool isZooming)
     {
