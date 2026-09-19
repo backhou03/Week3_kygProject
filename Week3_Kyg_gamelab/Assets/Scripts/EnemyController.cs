@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public Rigidbody rb;
     public MyPlayerController playerCont;
     public bool follow;
-
+    public Ui ui;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -71,7 +71,8 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             playerCont.hp -= 1;
-            Debug.Log(playerCont.hp);
+            ui.NowHp();
+            Debug.Log("현재 체력 : " + playerCont.hp);
             Debug.Log("hit");
         }
 

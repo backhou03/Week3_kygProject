@@ -8,7 +8,7 @@ public class MyPlayerController : MonoBehaviour
     public EnemyController enemy_controller;
     public CinemachineCamera zoomcamera;
     public CinemachineThirdPersonFollow idkCamera;
-
+    public Ui ui;
     private EnemyHit EnemyH;
     [Header("Player")]
     private float _speed;
@@ -35,6 +35,7 @@ public class MyPlayerController : MonoBehaviour
     private bool IsCurrentDeviceMouse = true;
     private float _threshold = 0.1f;
     private float _rotationVelocity;
+    public int ammo = 7;
     [SerializeField] private GameObject crosshair;
 
 
@@ -48,14 +49,17 @@ public class MyPlayerController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         idkCamera = zoomcamera.GetComponent<CinemachineThirdPersonFollow>();
 
+
     }
     void Start()
     {
         //시작할때 마우스가 이상한곳으로 튀지 않도록 값을 삽입
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
-        Debug.Log(hp);
-
+        Debug.Log("현재 체력 : " + hp);
+        Debug.Log("현재 총알 : " + ammo);
+        ui.NowHp();
+        ui.NowAmmo();
     }
     private void OnEnable()
     {
@@ -165,7 +169,7 @@ public class MyPlayerController : MonoBehaviour
     private void Shot()
     {
 
-        if (crosshair.activeSelf)
+        if (crosshair.activeSelf == true && ammo != 0)
         {
 
             RaycastHit hit;
@@ -175,10 +179,13 @@ public class MyPlayerController : MonoBehaviour
                                 Debug.Log(hit.transform.name);*/
                 CheckHit(hit);
             }
+            ammo -= 1;
 
+            Debug.Log("현재 총알 : " + ammo);
             Debug.DrawRay(_mainCamera.transform.position, _mainCamera.transform.forward * 15, Color.red);
-        }
 
+        }
+        ui.NowAmmo();
     }
     private void CheckHit(RaycastHit hit)
     {

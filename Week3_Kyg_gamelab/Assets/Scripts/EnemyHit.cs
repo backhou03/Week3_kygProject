@@ -17,6 +17,7 @@ public class EnemyHit : MonoBehaviour
     public Material _red;
     public Renderer renderer;
 
+
     public void Start()
     {
         renderer = gameObject.GetComponent<Renderer>();
@@ -26,6 +27,7 @@ public class EnemyHit : MonoBehaviour
         try
         {
             controller.health -= value;
+
             if (controller.health <= 0)
                 controller.die();
         }
