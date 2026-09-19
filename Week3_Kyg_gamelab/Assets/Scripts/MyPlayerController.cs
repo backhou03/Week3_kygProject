@@ -1,18 +1,22 @@
+using Unity.Cinemachine;
 using UnityEngine;
-
 public class MyPlayerController : MonoBehaviour
 {
     private MyPlayerInput _input;
     private CharacterController _controller;
     private GameObject _mainCamera;
     public EnemyController enemy_controller;
+    public CinemachineCamera zoomcamera;
+    public CinemachineThirdPersonFollow idkCamera;
+
     private EnemyHit EnemyH;
     [Header("Player")]
     private float _speed;
+
     private float sprintSpeed = 5.335f;
     public float moveSpeed = 2f;
     public float damage = 10.0f;
-
+    public int hp = 3;
     public float SpeedChangeRate = 10f; //가속 감속을 위한 수치
     [Space]
     [Header("Cinemachine")]
@@ -33,6 +37,7 @@ public class MyPlayerController : MonoBehaviour
     private float _rotationVelocity;
     [SerializeField] private GameObject crosshair;
 
+
     private void Awake()
     {
         if (_mainCamera == null)
@@ -41,13 +46,15 @@ public class MyPlayerController : MonoBehaviour
         }
         _input = GetComponent<MyPlayerInput>();
         _controller = GetComponent<CharacterController>();
+        idkCamera = zoomcamera.GetComponent<CinemachineThirdPersonFollow>();
+
     }
     void Start()
     {
         //시작할때 마우스가 이상한곳으로 튀지 않도록 값을 삽입
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
-
+        Debug.Log(hp);
 
     }
     private void OnEnable()
@@ -223,6 +230,6 @@ public class MyPlayerController : MonoBehaviour
     {
 
         crosshair.SetActive(isZooming);
-
+        idkCamera.CameraDistance = isZooming ? 1 : 3;
     }
 }
