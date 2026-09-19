@@ -26,11 +26,14 @@ public class EnemyController : MonoBehaviour
 
 
                 }*/
-
-        if (follow)
+        float distance = (target.position - transform.position).magnitude;
+        Vector3 lookDir = target.position - transform.position;
+        if (follow && (distance < 5))
         {
-            Vector3 lookDir = target.position - transform.position;
+            /*            Debug.Log(distance);
+                        Debug.Log(lookDir.x);*/
             lookDir.y = 0;
+
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.fixedDeltaTime * 5f);
             rb.AddForce(lookDir * 0.2f, ForceMode.VelocityChange);
             rb.linearVelocity = Vector3.zero;
@@ -48,9 +51,11 @@ public class EnemyController : MonoBehaviour
         Debug.Log("다리절단");
         if (left_leg.activeInHierarchy == false && right_leg.activeInHierarchy == false)
         {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             follow = false;
             StartCoroutine(Dd());
             rb.useGravity = true;
+
         }
         else
         {
