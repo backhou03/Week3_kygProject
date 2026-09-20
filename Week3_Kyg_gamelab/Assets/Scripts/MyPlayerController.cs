@@ -9,6 +9,7 @@ public class MyPlayerController : MonoBehaviour
     public CinemachineCamera zoomcamera;
     public CinemachineThirdPersonFollow idkCamera;
     public Ui ui;
+    public bool IsHit = false;
     private EnemyHit EnemyH;
     [Header("Player")]
     private float _speed;
@@ -133,8 +134,11 @@ public class MyPlayerController : MonoBehaviour
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         // move the player
-        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                         new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+        if (!IsHit)
+        {
+            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+        }
     }
     private void CameraRotation()
     {
