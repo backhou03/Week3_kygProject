@@ -8,7 +8,7 @@ public class Ui : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void NowAmmo()
     {
-        ammoo.text = "Ammo : " + cont.ammo;
+        ammoo.text = "Ammo : " + cont.currentAmmo;
     }
 
     // Update is called once per frame

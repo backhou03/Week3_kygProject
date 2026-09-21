@@ -4,17 +4,23 @@ public class MyPlayerController : MonoBehaviour
 {
     private MyPlayerInput _input;
     private CharacterController _controller;
+    private Vector3 distance;
+
+    public GameObject gun;
+
     private GameObject _mainCamera;
     public EnemyController enemy_controller;
     public CinemachineCamera zoomcamera;
     public CinemachineThirdPersonFollow idkCamera;
     public Ui ui;
     public bool IsHit = false;
+    public GameObject reload;
     private EnemyHit EnemyH;
+    private BossHit BossH;
     [Header("Player")]
     private float _speed;
-
-    private float sprintSpeed = 5.335f;
+    private Vector3 knockbackVelocity;
+    private float sprintSpeed = 3.8f;
     public float moveSpeed = 2f;
     public float damage = 10.0f;
     public int hp = 3;
@@ -36,7 +42,9 @@ public class MyPlayerController : MonoBehaviour
     private bool IsCurrentDeviceMouse = true;
     private float _threshold = 0.1f;
     private float _rotationVelocity;
-    public int ammo = 7;
+    public int currentAmmo = 7;
+    [SerializeField] private int maxAmmo = 7;
+    public GameObject BBang;
     [SerializeField] private GameObject crosshair;
 
 
@@ -58,7 +66,7 @@ public class MyPlayerController : MonoBehaviour
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
         Debug.Log("현재 체력 : " + hp);
-        Debug.Log("현재 총알 : " + ammo);
+        Debug.Log("현재 총알 : " + currentAmmo);
         ui.NowHp();
         ui.NowAmmo();
     }
@@ -132,7 +140,7 @@ public class MyPlayerController : MonoBehaviour
 
 
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
+        _verticalVelocity += Physics.gravity.y * Time.deltaTime;
         // move the player
         if (!IsHit)
         {
@@ -172,10 +180,17 @@ public class MyPlayerController : MonoBehaviour
     }
     private void Shot()
     {
-
-        if (crosshair.activeSelf == true && ammo != 0)
+        ui.NowAmmo();
+        if (currentAmmo == 0)
         {
 
+            StartCoroutine(Reload());
+            return;
+        }
+        if (crosshair.activeSelf == true && currentAmmo != 0)
+        {
+            BBang.SetActive(true);
+            StartCoroutine(Bang());
             RaycastHit hit;
             if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f, LayerMask.GetMask("Enemy")))
             {
@@ -183,13 +198,52 @@ public class MyPlayerController : MonoBehaviour
                                 Debug.Log(hit.transform.name);*/
                 CheckHit(hit);
             }
-            ammo -= 1;
+            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f, LayerMask.GetMask("Boss")))
+            {
 
-            Debug.Log("현재 총알 : " + ammo);
+                Debug.Log("boss");
+                CheckBossHit(hit);
+            }
+            currentAmmo -= 1;
+
+            Debug.Log("현재 총알 : " + currentAmmo);
             Debug.DrawRay(_mainCamera.transform.position, _mainCamera.transform.forward * 15, Color.red);
 
         }
+
+    }
+    public System.Collections.IEnumerator Reload()
+    {
+        Debug.Log("장전중");
+        reload.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        reload.SetActive(false);
+        currentAmmo = maxAmmo;
+        Debug.Log("장전완료");
         ui.NowAmmo();
+    }
+    public System.Collections.IEnumerator Bang()
+    {
+        yield return new WaitForSeconds(0.1f);
+        BBang.SetActive(false);
+    }
+    private void CheckBossHit(RaycastHit hit)
+    {
+        try
+        {
+            BossH = hit.collider.GetComponent<BossHit>();
+            switch (BossH.bossDamageType)
+            {
+                case BossHit.EnemyCollisionType.head:
+                    Debug.Log("대가리샷");
+                    BossH.BossHIT();
+                    break;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("피격 처리 중 에러 발생: " + e.Message);
+        }
     }
     private void CheckHit(RaycastHit hit)
     {
@@ -241,6 +295,33 @@ public class MyPlayerController : MonoBehaviour
     {
 
         crosshair.SetActive(isZooming);
+        gun.SetActive(isZooming);
         idkCamera.CameraDistance = isZooming ? 1 : 3;
+    }
+    public void BossAttack(Vector3 attackPos, float knockbackForce)
+    {
+        if (IsHit) return;
+        Vector3 knockbackDir = (transform.position - attackPos).normalized;
+        knockbackDir.y = 0;
+        knockbackVelocity = knockbackDir * knockbackForce;
+        StartCoroutine(KnockbackRoutine());
+
+
+    }
+    public System.Collections.IEnumerator KnockbackRoutine()
+    {
+        IsHit = true;
+        float timer = 0.0f;
+        float duration = 0.5f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            knockbackVelocity.y += Physics.gravity.y * Time.deltaTime;
+            _controller.Move(knockbackVelocity * Time.deltaTime);
+            yield return null;
+        }
+
+        IsHit = false;
+
     }
 }

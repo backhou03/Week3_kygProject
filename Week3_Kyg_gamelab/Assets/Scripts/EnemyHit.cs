@@ -16,6 +16,7 @@ public class EnemyHit : MonoBehaviour
     public GameObject fakeBody;
     public Material _red;
     public Renderer renderer;
+    public HitCrosshairManager crosshairManager;
 
 
     public void Start()
@@ -26,6 +27,7 @@ public class EnemyHit : MonoBehaviour
     {
         try
         {
+            crosshairManager.ShowCrosshair();
             controller.health -= value;
 
             if (controller.health <= 0)
@@ -51,4 +53,5 @@ public class EnemyHit : MonoBehaviour
     {
         renderer.material = _red;
     }
+
 }
