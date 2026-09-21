@@ -15,18 +15,27 @@ public class BossHit : MonoBehaviour
     public GameObject bossSad;
     public Boss boss;
     public HitCrosshairManager crosshairManager;
+    public MyPlayerController Playerconf;
+    public GameObject Boss;
+    public BossDie bossdie;
     public void BossHIT()
     {
         try
         {
             crosshairManager.ShowCrosshair();
-            Debug.Log(boss.bossHeadHp);
-            boss.bossHeadHp -= 1;
 
+
+            boss.health -= Playerconf.damage;
+            Debug.Log(boss.bossHeadHp);
             if (boss.bossHeadHp <= 0)
             {
                 Debug.Log("보스기절");
                 StartCoroutine(KnockDownBoss());
+            }
+            if (boss.health <= 0)
+            {
+
+                bossdie.BossDIe();
             }
         }
         catch

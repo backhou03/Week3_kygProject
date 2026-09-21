@@ -1147,6 +1147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cont: {fileID: 0}
+  playerHitImage: {fileID: 0}
+  PlayerHitManagee: {fileID: 0}
+  ui: {fileID: 0}
 --- !u!1 &5149457336316663317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,6 +1815,9 @@ MonoBehaviour:
   bossSad: {fileID: 8056915417112999129}
   boss: {fileID: 8314760416761119261}
   crosshairManager: {fileID: 0}
+  Playerconf: {fileID: 0}
+  Boss: {fileID: 0}
+  bossdie: {fileID: 0}
 --- !u!1 &7513157577435477679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,8 +1972,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7819633307496724768}
-  - component: {fileID: 1274366541135959215}
-  - component: {fileID: 5556002773672570159}
   - component: {fileID: 414109953049731834}
   - component: {fileID: 8314760416761119261}
   m_Layer: 0
@@ -2007,44 +2011,6 @@ Transform:
   - {fileID: 6367295913438962800}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!111 &1274366541135959215
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651081814288434834}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: cecc517e8ad9cb44face74934bfffe4c, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
---- !u!95 &5556002773672570159
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651081814288434834}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 375e2762539e85e4e9160d6a9061f7f8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!54 &414109953049731834
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2094,7 +2060,7 @@ MonoBehaviour:
   ui: {fileID: 0}
   hand: {fileID: 6557885981804720639}
   boss: {fileID: 0}
-  ani: {fileID: 5556002773672570159}
+  ani: {fileID: 0}
   bossHeadHp: 3
   bossDistance: 0
   bossKnockDown: 0
@@ -2347,3 +2313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cont: {fileID: 0}
+  playerHitImage: {fileID: 0}
+  PlayerHitManagee: {fileID: 0}
+  ui: {fileID: 0}

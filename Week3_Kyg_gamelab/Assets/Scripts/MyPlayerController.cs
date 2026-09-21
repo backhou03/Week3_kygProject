@@ -17,10 +17,11 @@ public class MyPlayerController : MonoBehaviour
     public GameObject reload;
     private EnemyHit EnemyH;
     private BossHit BossH;
+    public Boss boss;
     [Header("Player")]
     private float _speed;
     private Vector3 knockbackVelocity;
-    private float sprintSpeed = 3.8f;
+    private float sprintSpeed = 5f;
     public float moveSpeed = 2f;
     public float damage = 10.0f;
     public int hp = 3;
@@ -43,7 +44,7 @@ public class MyPlayerController : MonoBehaviour
     private float _threshold = 0.1f;
     private float _rotationVelocity;
     public int currentAmmo = 7;
-    [SerializeField] private int maxAmmo = 7;
+    public int plusAmmo = 7;
     public GameObject BBang;
     [SerializeField] private GameObject crosshair;
 
@@ -62,13 +63,16 @@ public class MyPlayerController : MonoBehaviour
     }
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         //시작할때 마우스가 이상한곳으로 튀지 않도록 값을 삽입
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
-        Debug.Log("현재 체력 : " + hp);
-        Debug.Log("현재 총알 : " + currentAmmo);
-        ui.NowHp();
-        ui.NowAmmo();
+        if (ui != null)
+        {
+            ui.NowHp();
+            ui.NowAmmo();
+        }
     }
     private void OnEnable()
     {
@@ -193,13 +197,13 @@ public class MyPlayerController : MonoBehaviour
             BBang.SetActive(true);
             StartCoroutine(Bang());
             RaycastHit hit;
-            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f, LayerMask.GetMask("Enemy")))
+            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 30f, LayerMask.GetMask("Enemy")))
             {
                 /*                Debug.Log(hit.transform.position);
                                 Debug.Log(hit.transform.name);*/
                 CheckHit(hit);
             }
-            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 15f, LayerMask.GetMask("Boss")))
+            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 30f, LayerMask.GetMask("Boss")))
             {
 
                 Debug.Log("boss");
@@ -223,7 +227,7 @@ public class MyPlayerController : MonoBehaviour
         reload.SetActive(true);
         yield return new WaitForSeconds(2f);
         reload.SetActive(false);
-        currentAmmo = maxAmmo;
+        currentAmmo = plusAmmo;
         Debug.Log("장전완료");
         ui.NowAmmo();
     }
@@ -234,21 +238,38 @@ public class MyPlayerController : MonoBehaviour
     }
     private void CheckBossHit(RaycastHit hit)
     {
-        try
+
+        BossH = hit.collider.GetComponent<BossHit>();
+        switch (BossH.bossDamageType)
         {
-            BossH = hit.collider.GetComponent<BossHit>();
-            switch (BossH.bossDamageType)
-            {
-                case BossHit.EnemyCollisionType.head:
-                    Debug.Log("대가리샷");
-                    BossH.BossHIT();
-                    break;
-            }
+            case BossHit.EnemyCollisionType.head:
+                boss.bossHeadHp -= 1;
+                BossH.BossHIT();
+                break;
+            case BossHit.EnemyCollisionType.leftArm:
+
+                BossH.BossHIT();
+                break;
+            case BossHit.EnemyCollisionType.rightArm:
+
+                BossH.BossHIT();
+                break;
+            case BossHit.EnemyCollisionType.body:
+
+                BossH.BossHIT();
+                break;
+            case BossHit.EnemyCollisionType.leftLeg:
+
+                BossH.BossHIT();
+                break;
+            case BossHit.EnemyCollisionType.rightLeg:
+
+                BossH.BossHIT();
+                break;
+
         }
-        catch (System.Exception e)
-        {
-            Debug.LogError("피격 처리 중 에러 발생: " + e.Message);
-        }
+
+
     }
     private void CheckHit(RaycastHit hit)
     {

@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public Collider right_Arm;
     public Ui ui;
     public PlayerHitImage playerHitImage;
+    public PlayerHitManager HitManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -40,6 +41,7 @@ public class EnemyController : MonoBehaviour
 
 
     }
+
     public void die()
     {
         Debug.Log("사망");
@@ -86,14 +88,18 @@ public class EnemyController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerHitImage.ShowPlayerHitImage();
-            playerCont.hp -= 1;
+            HitManager.PlayerHitManage();
             ui.NowHp();
             Debug.Log("현재 체력 : " + playerCont.hp);
             Debug.Log("hit");
         }
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            Destroy(gameObject);
+        }
 
     }
+
     //offset = -0.4f
     //height = 0.6
 }

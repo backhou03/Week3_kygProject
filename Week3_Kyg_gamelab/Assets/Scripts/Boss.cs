@@ -1,7 +1,7 @@
 using UnityEngine;
 public class Boss : MonoBehaviour
 {
-    public float health = 100f;
+    public float health = 10000;
     public GameObject left_leg;
     public GameObject right_leg;
 
@@ -13,7 +13,7 @@ public class Boss : MonoBehaviour
     public Collider hand;
     public GameObject boss;
     public Animator ani;
-    public int bossHeadHp = 3;
+    public float bossHeadHp = 3;
     public float bossDistance;
     public bool bossKnockDown = false;
 
@@ -58,6 +58,7 @@ public class Boss : MonoBehaviour
 
 
     }
+
     public void die()
     {
         Debug.Log("사망");
