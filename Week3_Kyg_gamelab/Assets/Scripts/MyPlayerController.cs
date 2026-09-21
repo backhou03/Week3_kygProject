@@ -206,7 +206,7 @@ public class MyPlayerController : MonoBehaviour
                 CheckBossHit(hit);
             }
             currentAmmo -= 1;
-
+            ui.NowAmmo();
             Debug.Log("현재 총알 : " + currentAmmo);
             Debug.DrawRay(_mainCamera.transform.position, _mainCamera.transform.forward * 15, Color.red);
 
