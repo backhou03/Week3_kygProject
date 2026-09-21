@@ -12,6 +12,7 @@ public class MyPlayerInput : MonoBehaviour
     //public bool IsShot;
     public event Action<bool> IsZoom;
     public event Action IsShot;
+    public event Action IsReload;
 
     private void Awake()
     {
@@ -35,6 +36,8 @@ public class MyPlayerInput : MonoBehaviour
 
         actions.Player.Attack.performed += OnAttack;
 
+        actions.Player.Reload.performed += OnReload;
+
 
         actions.Player.Zoom.performed += OnZoom;
         actions.Player.Zoom.canceled += OnZoom;
@@ -56,6 +59,8 @@ public class MyPlayerInput : MonoBehaviour
         actions.Player.Sprint.canceled -= OnSprint;
 
         actions.Player.Attack.performed -= OnAttack;
+
+        actions.Player.Reload.performed -= OnReload;
 
         actions.Player.Zoom.performed -= OnZoom;
         actions.Player.Zoom.canceled -= OnZoom;
@@ -88,6 +93,14 @@ public class MyPlayerInput : MonoBehaviour
             IsShot?.Invoke();
         }
     }
+    private void OnReload(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            IsReload?.Invoke();
+        }
+    }
+
     private void OnZoom(InputAction.CallbackContext context)
     {
         IsZoom?.Invoke(context.ReadValueAsButton());

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ZoomCamera : MonoBehaviour
 {
     public CinemachineThirdPersonFollow thirdPersonFollow;
-    public float targetDistance = 2f;
+    public float targetDistance = 2;
     void Start()
     {
 

@@ -74,12 +74,13 @@ public class MyPlayerController : MonoBehaviour
     {
         _input.IsShot += Shot;
         _input.IsZoom += Zoom;
+        _input.IsReload += Reload;
     }
     private void OnDisable()
     {
         _input.IsShot -= Shot;
         _input.IsZoom -= Zoom;
-
+        _input.IsReload -= Reload;
     }
     // Update is called once per frame
     void Update()
@@ -184,7 +185,7 @@ public class MyPlayerController : MonoBehaviour
         if (currentAmmo == 0)
         {
 
-            StartCoroutine(Reload());
+            StartCoroutine(Reloading());
             return;
         }
         if (crosshair.activeSelf == true && currentAmmo != 0)
@@ -212,7 +213,11 @@ public class MyPlayerController : MonoBehaviour
         }
 
     }
-    public System.Collections.IEnumerator Reload()
+    public void Reload()
+    {
+        StartCoroutine(Reloading());
+    }
+    public System.Collections.IEnumerator Reloading()
     {
         Debug.Log("장전중");
         reload.SetActive(true);
@@ -296,7 +301,7 @@ public class MyPlayerController : MonoBehaviour
 
         crosshair.SetActive(isZooming);
         gun.SetActive(isZooming);
-        idkCamera.CameraDistance = isZooming ? 1 : 3;
+        idkCamera.CameraDistance = isZooming ? 2 : 4;
     }
     public void BossAttack(Vector3 attackPos, float knockbackForce)
     {
