@@ -143,12 +143,16 @@ public class MyPlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
-
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-        _verticalVelocity += Physics.gravity.y * Time.deltaTime;
         // move the player
+        if (_controller.isGrounded && _verticalVelocity < 0.0f)
+        {
+            _verticalVelocity = -2f;
+        }
+        _verticalVelocity += Physics.gravity.y * Time.deltaTime;
         if (!IsHit)
         {
+            Debug.Log($"입력속도: {_speed}, Y축중력: {_verticalVelocity}, 피격여부: {IsHit}");
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
         }

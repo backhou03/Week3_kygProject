@@ -44,7 +44,7 @@ public class Boss : MonoBehaviour
             lookDir.y = 0;
 
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.fixedDeltaTime * 5f);
-            rb.AddForce(lookDir * 0.2f, ForceMode.VelocityChange);
+            rb.AddForce(lookDir * 0.1f, ForceMode.VelocityChange);
             rb.linearVelocity = Vector3.zero;
         }
         Vector3 ddistance = transform.position - target.transform.position;
